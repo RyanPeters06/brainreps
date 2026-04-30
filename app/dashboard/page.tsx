@@ -54,6 +54,7 @@ export default function DashboardPage() {
             10 minutes · Mixed cognitive training
           </p>
           <button
+            onClick={() => router.push("/exercises/memory-sequence")}
             style={{ backgroundColor: "#ADFF2F", color: "#0A0A0A" }}
             className="px-6 py-3 rounded-full font-bold text-sm hover:opacity-90 transition-opacity"
           >

@@ -36,8 +36,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // Unauthenticated users can't access dashboard
-  if (!user && pathname.startsWith("/dashboard")) {
+  // Unauthenticated users can't access dashboard or exercises
+  if (!user && (pathname.startsWith("/dashboard") || pathname.startsWith("/exercises"))) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -45,5 +45,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/signup"],
+  matcher: ["/dashboard/:path*", "/exercises/:path*", "/login", "/signup"],
 };
