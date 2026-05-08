@@ -31,65 +31,62 @@ export default function LoginPage() {
   }
 
   return (
-    <div
-      style={{ backgroundColor: "#0A0A0A" }}
-      className="min-h-screen text-white flex flex-col"
-    >
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 py-5 md:px-12">
-        <Link
-          href="/"
-          style={{ color: "#ADFF2F" }}
-          className="text-xl font-bold tracking-tight"
-        >
+    <div style={{ backgroundColor: "#1A1A1A" }} className="min-h-screen text-white flex flex-col">
+      <nav
+        style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
+        className="flex items-center px-6 py-4 md:px-12"
+      >
+        <Link href="/problems" style={{ color: "#C96B8A" }} className="text-base font-medium">
           BrainReps
         </Link>
       </nav>
 
-      {/* Form */}
       <div className="flex flex-1 items-center justify-center px-6">
         <div className="w-full max-w-sm">
-          <h1 className="text-3xl font-black tracking-tight mb-2">
-            Welcome back
-          </h1>
-          <p className="text-gray-400 text-sm mb-8">
+          <h1 className="text-2xl font-medium mb-1">Welcome back</h1>
+          <p className="text-sm mb-8" style={{ color: "#8A8A8A" }}>
             Don&apos;t have an account?{" "}
-            <Link
-              href="/signup"
-              style={{ color: "#ADFF2F" }}
-              className="font-medium hover:opacity-80 transition-opacity"
-            >
+            <Link href="/signup" style={{ color: "#C96B8A" }} className="hover:opacity-80 transition-opacity">
               Sign up
             </Link>
           </p>
 
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-sm text-gray-400">Email</label>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm" style={{ color: "#8A8A8A" }}>Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="you@example.com"
-                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ADFF2F] transition-colors"
+                className="px-3 py-2.5 rounded text-sm text-white placeholder-[#5A5A5A] focus:outline-none transition-colors"
+                style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
+                onFocus={(e) => (e.target.style.borderColor = "#C96B8A")}
+                onBlur={(e) => (e.target.style.borderColor = "#3A3A3A")}
               />
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm text-gray-400">Password</label>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm" style={{ color: "#8A8A8A" }}>Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ADFF2F] transition-colors"
+                className="px-3 py-2.5 rounded text-sm text-white placeholder-[#5A5A5A] focus:outline-none transition-colors"
+                style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
+                onFocus={(e) => (e.target.style.borderColor = "#C96B8A")}
+                onBlur={(e) => (e.target.style.borderColor = "#3A3A3A")}
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-4 py-3">
+              <p
+                className="text-sm px-3 py-2.5 rounded"
+                style={{ color: "#EF4444", backgroundColor: "#2E1A1A", border: "1px solid #3A2020" }}
+              >
                 {error}
               </p>
             )}
@@ -97,8 +94,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              style={{ backgroundColor: "#ADFF2F", color: "#0A0A0A" }}
-              className="mt-2 rounded-full py-3 font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-1 py-2.5 rounded text-sm font-medium transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
+              style={{ backgroundColor: "#C96B8A", color: "#fff" }}
             >
               {loading ? "Signing in…" : "Login"}
             </button>
