@@ -62,7 +62,7 @@ export default function ProblemsPage() {
         {/* Logo */}
         <div style={{ padding: "18px 20px 14px", borderBottom: "1px solid #2E2E2E" }}>
           <Link href="/">
-            <img src="/logo.png" alt="BrainReps" style={{ height: 38, width: "auto" }} />
+            <img src="/logo.png" alt="BrainReps" style={{ width: "80%", height: "auto" }} />
           </Link>
         </div>
 
