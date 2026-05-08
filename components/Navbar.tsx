@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
-export default function Navbar() {
+export default function Navbar({ logoHeight = 38 }: { logoHeight?: number }) {
   const pathname = usePathname();
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -40,7 +40,7 @@ export default function Navbar() {
       className="flex items-center justify-between px-6 py-4 md:px-10"
     >
       <Link href="/" className="shrink-0">
-        <img src="/logo.png" alt="BrainReps" style={{ height: 38, width: "auto" }} />
+        <img src="/logo.png" alt="BrainReps" style={{ height: logoHeight, width: "auto" }} />
       </Link>
 
       <div className="hidden md:flex items-center gap-7 text-sm absolute left-1/2 -translate-x-1/2">

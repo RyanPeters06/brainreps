@@ -32,7 +32,7 @@ export default function LoginPage() {
 
   return (
     <div style={{ backgroundColor: "#1A1A1A", minHeight: "100vh" }} className="text-white flex flex-col">
-      <Navbar />
+      <Navbar logoHeight={46} />
 
       <div className="flex flex-1 items-center justify-center px-6">
         <div className="w-full max-w-sm">
