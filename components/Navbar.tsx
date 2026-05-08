@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 export default function Navbar() {
@@ -39,8 +40,8 @@ export default function Navbar() {
       style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
       className="flex items-center justify-between px-6 py-3 md:px-10"
     >
-      <Link href="/problems" style={{ color: "#C96B8A" }} className="text-sm font-medium shrink-0">
-        BrainReps
+      <Link href="/" className="shrink-0">
+        <Image src="/logo.png" alt="BrainReps" height={40} width={0} style={{ width: "auto", height: 40 }} priority />
       </Link>
 
       <div className="hidden md:flex items-center gap-7 text-sm absolute left-1/2 -translate-x-1/2">

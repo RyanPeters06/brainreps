@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const features = [
   {
@@ -44,7 +45,9 @@ export default function Home() {
         style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
         className="flex items-center justify-between px-6 py-3 md:px-12"
       >
-        <span style={{ color: "#C96B8A" }} className="text-sm font-medium">BrainReps</span>
+        <Link href="/">
+          <Image src="/logo.png" alt="BrainReps" height={40} width={0} style={{ width: "auto", height: 40 }} priority />
+        </Link>
         <div className="flex items-center gap-5 text-sm">
           <Link href="/login" style={{ color: "#8A8A8A" }} className="hover:text-white transition-colors">
             Login
