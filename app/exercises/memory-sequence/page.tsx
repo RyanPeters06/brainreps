@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase/client";
 
 type Phase = "memorize" | "recall" | "result";
@@ -43,7 +44,6 @@ export default function MemorySequencePage() {
       const elapsed   = Date.now() - startTime.current;
       const remaining = Math.max(0, 100 - (elapsed / MEMORIZE_DURATION) * 100);
       setProgress(remaining);
-
       if (remaining > 0) {
         animFrame.current = requestAnimationFrame(tick);
       } else {
@@ -93,21 +93,11 @@ export default function MemorySequencePage() {
   const showBanner = phase === "result" && isLoggedIn === false && !bannerDismissed;
 
   return (
-    <div style={{ backgroundColor: "#1A1A1A" }} className="min-h-screen text-white flex flex-col">
-      <nav
-        style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
-        className="flex items-center justify-between px-6 py-4 md:px-12"
-      >
-        <Link href="/problems" style={{ color: "#C96B8A" }} className="text-base font-medium">
-          BrainReps
-        </Link>
-        <span className="text-xs uppercase tracking-widest" style={{ color: "#5A5A5A" }}>
-          Memory Sequence
-        </span>
-      </nav>
+    <div style={{ backgroundColor: "#1A1A1A", minHeight: "100vh" }} className="text-white flex flex-col">
+      <Navbar />
 
       {/* Progress bar */}
-      <div style={{ height: "2px", backgroundColor: "#2E2E2E" }}>
+      <div style={{ height: 2, backgroundColor: "#2E2E2E" }}>
         <div
           style={{
             height: "100%",
@@ -120,7 +110,7 @@ export default function MemorySequencePage() {
 
       {/* Content */}
       <div
-        className="flex flex-1 flex-col items-center justify-center px-6 text-center pb-20"
+        className="flex flex-1 flex-col items-center justify-center px-6 text-center pb-16"
         style={{ opacity: visible ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         {/* PHASE 1 — MEMORIZE */}
@@ -131,11 +121,7 @@ export default function MemorySequencePage() {
             </p>
             <div className="flex gap-4 md:gap-6">
               {sequence.map((n, i) => (
-                <span
-                  key={i}
-                  className="text-6xl md:text-7xl font-medium tabular-nums"
-                  style={{ color: "#C96B8A" }}
-                >
+                <span key={i} className="text-6xl md:text-7xl font-medium tabular-nums" style={{ color: "#C96B8A" }}>
                   {n}
                 </span>
               ))}
@@ -160,7 +146,7 @@ export default function MemorySequencePage() {
                   onChange={(e) => handleInput(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
                   maxLength={1}
-                  className="w-12 h-14 md:w-14 md:h-16 text-center text-2xl md:text-3xl font-medium rounded focus:outline-none transition-colors"
+                  className="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-medium rounded focus:outline-none transition-colors"
                   style={{
                     backgroundColor: "#262626",
                     border: `1px solid ${val ? "#C96B8A" : "#3A3A3A"}`,
@@ -202,11 +188,11 @@ export default function MemorySequencePage() {
                 return (
                   <div key={i} className="flex flex-col items-center gap-2">
                     <div
-                      className="w-12 h-14 md:w-14 md:h-16 rounded flex items-center justify-center text-2xl md:text-3xl font-medium"
+                      className="w-12 h-14 md:w-14 md:h-16 rounded flex items-center justify-center text-2xl font-medium"
                       style={{
-                        border:           `1px solid ${correct ? "#2DB55D" : "#EF4444"}`,
-                        backgroundColor:  correct ? "#1A2E22" : "#2E1A1A",
-                        color:            correct ? "#2DB55D" : "#EF4444",
+                        border:          `1px solid ${correct ? "#2DB55D" : "#EF4444"}`,
+                        backgroundColor: correct ? "#1A2E22" : "#2E1A1A",
+                        color:           correct ? "#2DB55D" : "#EF4444",
                       }}
                     >
                       {n}
@@ -239,10 +225,10 @@ export default function MemorySequencePage() {
         )}
       </div>
 
-      {/* Signup nudge — logged-out users on result screen only */}
+      {/* Signup nudge banner */}
       {showBanner && (
         <div
-          className="fixed bottom-0 left-0 right-0 flex items-center justify-between gap-4 px-6 py-4 md:px-12"
+          className="fixed bottom-0 left-0 right-0 flex items-center justify-between gap-4 px-6 py-3 md:px-12"
           style={{ backgroundColor: "#1F1F1F", borderTop: "1px solid #3A3A3A" }}
         >
           <p className="text-sm" style={{ color: "#8A8A8A" }}>

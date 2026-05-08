@@ -3,22 +3,22 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await createClient().auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
@@ -31,15 +31,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ backgroundColor: "#1A1A1A" }} className="min-h-screen text-white flex flex-col">
-      <nav
-        style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
-        className="flex items-center px-6 py-4 md:px-12"
-      >
-        <Link href="/problems" style={{ color: "#C96B8A" }} className="text-base font-medium">
-          BrainReps
-        </Link>
-      </nav>
+    <div style={{ backgroundColor: "#1A1A1A", minHeight: "100vh" }} className="text-white flex flex-col">
+      <Navbar />
 
       <div className="flex flex-1 items-center justify-center px-6">
         <div className="w-full max-w-sm">
@@ -63,7 +56,7 @@ export default function LoginPage() {
                 className="px-3 py-2.5 rounded text-sm text-white placeholder-[#5A5A5A] focus:outline-none transition-colors"
                 style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
                 onFocus={(e) => (e.target.style.borderColor = "#C96B8A")}
-                onBlur={(e) => (e.target.style.borderColor = "#3A3A3A")}
+                onBlur={(e)  => (e.target.style.borderColor = "#3A3A3A")}
               />
             </div>
 
@@ -78,7 +71,7 @@ export default function LoginPage() {
                 className="px-3 py-2.5 rounded text-sm text-white placeholder-[#5A5A5A] focus:outline-none transition-colors"
                 style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
                 onFocus={(e) => (e.target.style.borderColor = "#C96B8A")}
-                onBlur={(e) => (e.target.style.borderColor = "#3A3A3A")}
+                onBlur={(e)  => (e.target.style.borderColor = "#3A3A3A")}
               />
             </div>
 
