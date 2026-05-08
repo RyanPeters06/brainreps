@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Phase = "memorize" | "recall" | "result";
@@ -15,7 +14,6 @@ function generateSequence(): number[] {
 }
 
 export default function MemorySequencePage() {
-  const router = useRouter();
   const [phase, setPhase] = useState<Phase>("memorize");
   const [sequence, setSequence] = useState<number[]>(generateSequence);
   const [inputs, setInputs] = useState<string[]>(Array(SEQUENCE_LENGTH).fill(""));
