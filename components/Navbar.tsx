@@ -40,7 +40,7 @@ export default function Navbar() {
       className="flex items-center justify-between px-6 py-3 md:px-10"
     >
       <Link href="/" className="shrink-0">
-        <img src="/logo.png" alt="BrainReps" style={{ height: 40, width: "auto" }} />
+        <img src="/logo.png" alt="BrainReps" style={{ height: 32, width: "auto" }} />
       </Link>
 
       <div className="hidden md:flex items-center gap-7 text-sm absolute left-1/2 -translate-x-1/2">

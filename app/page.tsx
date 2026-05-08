@@ -45,7 +45,7 @@ export default function Home() {
         className="flex items-center justify-between px-6 py-3 md:px-12"
       >
         <Link href="/">
-          <img src="/logo.png" alt="BrainReps" style={{ height: 40, width: "auto" }} />
+          <img src="/logo.png" alt="BrainReps" style={{ height: 32, width: "auto" }} />
         </Link>
         <div className="flex items-center gap-5 text-sm">
           <Link href="/login" style={{ color: "#8A8A8A" }} className="hover:text-white transition-colors">
