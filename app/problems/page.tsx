@@ -61,8 +61,8 @@ export default function ProblemsPage() {
       >
         {/* Logo */}
         <div style={{ padding: "18px 20px 14px", borderBottom: "1px solid #2E2E2E" }}>
-          <Link href="/problems" style={{ color: "#C96B8A" }} className="text-sm font-medium">
-            BrainReps
+          <Link href="/">
+            <img src="/logo.png" alt="BrainReps" style={{ height: 38, width: "auto" }} />
           </Link>
         </div>
 
