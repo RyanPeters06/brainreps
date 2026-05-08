@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 export default function DashboardPage() {
@@ -20,12 +21,17 @@ export default function DashboardPage() {
         <span style={{ color: "#ADFF2F" }} className="text-xl font-bold tracking-tight">
           BrainReps
         </span>
-        <button
-          onClick={handleLogout}
-          className="text-sm text-gray-400 hover:text-white transition-colors"
-        >
-          Logout
-        </button>
+        <div className="flex items-center gap-6">
+          <Link href="/problems" className="text-sm text-gray-400 hover:text-white transition-colors">
+            Library
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Logout
+          </button>
+        </div>
       </nav>
 
       {/* Main content */}
