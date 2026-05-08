@@ -13,7 +13,7 @@ export default function ExercisePlaceholderPage({
   return (
     <div style={{ backgroundColor: "#0A0A0A" }} className="min-h-screen text-white flex flex-col">
       <nav className="flex items-center justify-between px-6 py-5 md:px-12 border-b border-white/5">
-        <Link href="/dashboard" style={{ color: "#ADFF2F" }} className="text-xl font-bold tracking-tight">
+        <Link href="/problems" style={{ color: "#ADFF2F" }} className="text-xl font-bold tracking-tight">
           BrainReps
         </Link>
         <Link href="/problems" className="text-sm text-gray-400 hover:text-white transition-colors">

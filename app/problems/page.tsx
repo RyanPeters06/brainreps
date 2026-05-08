@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 type Category = "All" | "Memory" | "Quick Thinking" | "Critical Thinking" | "Attention Training" | "Cognitive Flexibility";
 type Difficulty = "All" | "Easy" | "Medium" | "Hard";
@@ -42,6 +43,13 @@ export default function ProblemsPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
   const [activeDifficulty, setActiveDifficulty] = useState<Difficulty>("All");
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    createClient()
+      .auth.getUser()
+      .then(({ data }) => setIsLoggedIn(!!data.user));
+  }, []);
 
   const filtered = exercises.filter((ex) => {
     const catMatch = activeCategory === "All" || ex.category === activeCategory;
@@ -61,12 +69,30 @@ export default function ProblemsPage() {
     <div style={{ backgroundColor: "#0A0A0A" }} className="min-h-screen text-white">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 py-5 md:px-12 border-b border-white/5">
-        <Link href="/dashboard" style={{ color: "#ADFF2F" }} className="text-xl font-bold tracking-tight">
+        <span style={{ color: "#ADFF2F" }} className="text-xl font-bold tracking-tight">
           BrainReps
-        </Link>
-        <Link href="/dashboard" className="text-sm text-gray-400 hover:text-white transition-colors">
-          Dashboard
-        </Link>
+        </span>
+        <div className="flex items-center gap-5 text-sm">
+          {isLoggedIn === true && (
+            <Link href="/dashboard" className="text-gray-400 hover:text-white transition-colors">
+              Dashboard
+            </Link>
+          )}
+          {isLoggedIn === false && (
+            <>
+              <Link href="/login" className="text-gray-400 hover:text-white transition-colors">
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                style={{ backgroundColor: "#ADFF2F", color: "#0A0A0A" }}
+                className="px-4 py-1.5 rounded-full font-semibold hover:opacity-90 transition-opacity"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
       </nav>
 
       <main className="max-w-5xl mx-auto px-6 py-10">
