@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 type Phase = "memorize" | "recall" | "result";
 
@@ -20,6 +21,8 @@ export default function MemorySequencePage() {
   const [inputs, setInputs] = useState<string[]>(Array(SEQUENCE_LENGTH).fill(""));
   const [progress, setProgress] = useState(100);
   const [visible, setVisible] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const startTime = useRef<number>(Date.now());
@@ -27,6 +30,12 @@ export default function MemorySequencePage() {
 
   const correctCount = sequence.filter((n, i) => Number(inputs[i]) === n).length;
   const allFilled = inputs.every((v) => v !== "");
+
+  useEffect(() => {
+    createClient()
+      .auth.getUser()
+      .then(({ data }) => setIsLoggedIn(!!data.user));
+  }, []);
 
   // Countdown bar animation
   useEffect(() => {
@@ -42,7 +51,6 @@ export default function MemorySequencePage() {
       if (remaining > 0) {
         animFrame.current = requestAnimationFrame(tick);
       } else {
-        // Fade out then switch phase
         setVisible(false);
         setTimeout(() => {
           setPhase("recall");
@@ -63,7 +71,6 @@ export default function MemorySequencePage() {
     const next = [...inputs];
     next[index] = digit;
     setInputs(next);
-
     if (digit && index < SEQUENCE_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -94,15 +101,14 @@ export default function MemorySequencePage() {
     }, 300);
   }, []);
 
+  const showBanner = phase === "result" && isLoggedIn === false && !bannerDismissed;
+
   return (
-    <div
-      style={{ backgroundColor: "#0A0A0A" }}
-      className="min-h-screen text-white flex flex-col"
-    >
+    <div style={{ backgroundColor: "#0A0A0A" }} className="min-h-screen text-white flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 py-5 md:px-12 border-b border-white/5">
         <Link
-          href="/dashboard"
+          href="/problems"
           style={{ color: "#ADFF2F" }}
           className="text-xl font-bold tracking-tight"
         >
@@ -126,11 +132,8 @@ export default function MemorySequencePage() {
 
       {/* Content */}
       <div
-        className="flex flex-1 flex-col items-center justify-center px-6 text-center"
-        style={{
-          opacity: visible ? 1 : 0,
-          transition: "opacity 0.3s ease",
-        }}
+        className="flex flex-1 flex-col items-center justify-center px-6 text-center pb-24"
+        style={{ opacity: visible ? 1 : 0, transition: "opacity 0.3s ease" }}
       >
         {/* PHASE 1 — MEMORIZE */}
         {phase === "memorize" && (
@@ -170,9 +173,7 @@ export default function MemorySequencePage() {
                   onKeyDown={(e) => handleKeyDown(i, e)}
                   maxLength={1}
                   className="w-14 h-16 md:w-16 md:h-20 text-center text-3xl md:text-4xl font-black rounded-xl border-2 bg-white/5 text-white focus:outline-none transition-colors"
-                  style={{
-                    borderColor: val ? "#ADFF2F" : "rgba(255,255,255,0.15)",
-                  }}
+                  style={{ borderColor: val ? "#ADFF2F" : "rgba(255,255,255,0.15)" }}
                 />
               ))}
             </div>
@@ -194,15 +195,11 @@ export default function MemorySequencePage() {
         {phase === "result" && (
           <div className="flex flex-col items-center gap-10">
             <div className="flex flex-col items-center gap-2">
-              <p className="text-gray-400 text-sm uppercase tracking-widest">
-                Results
-              </p>
+              <p className="text-gray-400 text-sm uppercase tracking-widest">Results</p>
               <p className="text-5xl font-black">
                 <span style={{ color: "#ADFF2F" }}>{correctCount}</span>
                 <span className="text-gray-600">/{SEQUENCE_LENGTH}</span>
-                <span className="text-2xl font-semibold text-gray-400 ml-3">
-                  Correct
-                </span>
+                <span className="text-2xl font-semibold text-gray-400 ml-3">Correct</span>
               </p>
             </div>
 
@@ -214,12 +211,8 @@ export default function MemorySequencePage() {
                     <div
                       className="w-14 h-16 md:w-16 md:h-20 rounded-xl border-2 flex items-center justify-center text-3xl md:text-4xl font-black"
                       style={{
-                        borderColor: correct
-                          ? "#ADFF2F"
-                          : "#ef4444",
-                        backgroundColor: correct
-                          ? "rgba(173,255,47,0.08)"
-                          : "rgba(239,68,68,0.08)",
+                        borderColor: correct ? "#ADFF2F" : "#ef4444",
+                        backgroundColor: correct ? "rgba(173,255,47,0.08)" : "rgba(239,68,68,0.08)",
                         color: correct ? "#ADFF2F" : "#ef4444",
                       }}
                     >
@@ -243,17 +236,47 @@ export default function MemorySequencePage() {
               >
                 Try Again
               </button>
-              <button
-                onClick={() => router.push("/dashboard")}
+              <Link
+                href="/problems"
                 style={{ backgroundColor: "#ADFF2F", color: "#0A0A0A" }}
                 className="px-6 py-3 rounded-full font-bold text-sm hover:opacity-90 transition-opacity"
               >
                 Next Exercise
-              </button>
+              </Link>
             </div>
           </div>
         )}
       </div>
+
+      {/* Signup nudge banner — only for logged-out users on result screen */}
+      {showBanner && (
+        <div
+          className="fixed bottom-0 left-0 right-0 flex items-center justify-between gap-4 px-6 py-4 md:px-12"
+          style={{
+            backgroundColor: "#111",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          <p className="text-sm text-gray-300">
+            Want to save your progress and build a streak?
+          </p>
+          <div className="flex items-center gap-4 shrink-0">
+            <Link
+              href="/signup"
+              style={{ backgroundColor: "#ADFF2F", color: "#0A0A0A" }}
+              className="px-4 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity whitespace-nowrap"
+            >
+              Create Free Account
+            </Link>
+            <button
+              onClick={() => setBannerDismissed(true)}
+              className="text-xs text-gray-600 hover:text-gray-400 transition-colors whitespace-nowrap"
+            >
+              Maybe later
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

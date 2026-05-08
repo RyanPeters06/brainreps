@@ -36,8 +36,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // Unauthenticated users can't access dashboard, exercises, or problems
-  if (!user && (pathname.startsWith("/dashboard") || pathname.startsWith("/exercises") || pathname.startsWith("/problems"))) {
+  // Unauthenticated users can't access dashboard or profile
+  if (!user && (pathname.startsWith("/dashboard") || pathname.startsWith("/profile"))) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -45,5 +45,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/exercises/:path*", "/problems/:path*", "/login", "/signup"],
+  matcher: ["/dashboard/:path*", "/profile/:path*", "/login", "/signup"],
 };
