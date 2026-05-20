@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { createClient } from "@/lib/supabase/client";
 import {
   exercises,
@@ -47,13 +48,15 @@ export default function ProblemsPage() {
   const username = userEmail ? userEmail.split("@")[0] : "Guest";
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", backgroundColor: "#1A1A1A" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden", backgroundColor: "#1A1A1A" }}>
+      <Navbar />
+      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
       {/* ── SIDEBAR ── */}
       <aside
         className="hidden lg:flex flex-col shrink-0"
         style={{
           width: 260,
-          height: "100vh",
+          height: "100%",
           overflowY: "auto",
           backgroundColor: "#1F1F1F",
           borderRight: "1px solid #3A3A3A",
@@ -149,7 +152,7 @@ export default function ProblemsPage() {
       </aside>
 
       {/* ── MAIN CONTENT ── */}
-      <main style={{ flex: 1, height: "100vh", overflowY: "auto" }} className="text-white">
+      <main style={{ flex: 1, height: "100%", overflowY: "auto" }} className="text-white">
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 24px 48px" }}>
 
           {/* Daily Challenge banner */}
@@ -294,6 +297,7 @@ export default function ProblemsPage() {
           </p>
         </div>
       </main>
+      </div>
     </div>
   );
 }
