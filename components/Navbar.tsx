@@ -27,9 +27,9 @@ export default function Navbar({ logoHeight = 38 }: { logoHeight?: number }) {
   }
 
   const navLinks = [
-    { href: "/problems", label: "Problems" },
-    { href: "/exercises/memory-sequence", label: "Daily Challenge" },
-    { href: "/profile", label: "Profile" },
+    { href: "/", label: "Home", exact: true },
+    { href: "/problems", label: "Problems", exact: false },
+    { href: "/about", label: "About", exact: false },
   ];
 
   const username = userEmail ? userEmail.split("@")[0] : null;
@@ -49,7 +49,7 @@ export default function Navbar({ logoHeight = 38 }: { logoHeight?: number }) {
             key={link.href}
             href={link.href}
             className="transition-colors"
-            style={{ color: pathname.startsWith(link.href) ? "#C96B8A" : "#8A8A8A" }}
+            style={{ color: (link.exact ? pathname === link.href : pathname.startsWith(link.href)) ? "#C96B8A" : "#8A8A8A" }}
           >
             {link.label}
           </Link>
