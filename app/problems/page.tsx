@@ -62,12 +62,6 @@ export default function ProblemsPage() {
           borderRight: "1px solid #3A3A3A",
         }}
       >
-        {/* Logo */}
-        <div style={{ padding: "18px 20px 14px", borderBottom: "1px solid #2E2E2E" }}>
-          <Link href="/" style={{ display: "block" }}>
-            <img src="/logo.png" alt="BrainReps" style={{ width: "80%", height: "auto", display: "block", margin: "0 auto" }} />
-          </Link>
-        </div>
 
         {/* User profile */}
         <div style={{ padding: "16px 20px", borderBottom: "1px solid #2E2E2E" }}>
