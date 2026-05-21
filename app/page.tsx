@@ -1,76 +1,23 @@
 import Link from "next/link";
-
-const features = [
-  {
-    title: "14 Cognitive Exercises",
-    description: "Memory, attention, logic, and flexibility — every major cognitive domain covered in one platform.",
-    icon: "◈",
-  },
-  {
-    title: "Daily Challenges",
-    description: "A new featured exercise every day. Build a streak. Show up consistently.",
-    icon: "◉",
-  },
-  {
-    title: "Track Your Progress",
-    description: "Session history, streak calendar, and category breakdowns — see exactly where you're improving.",
-    icon: "◎",
-  },
-];
-
-const steps = [
-  {
-    num: "01",
-    title: "Browse the library",
-    description: "Explore 14 exercises across memory, attention, logic, and cognitive flexibility.",
-  },
-  {
-    num: "02",
-    title: "Complete daily challenges",
-    description: "One featured exercise per day keeps your streak alive and your training consistent.",
-  },
-  {
-    num: "03",
-    title: "Track your improvement",
-    description: "Sign up to save results, build streaks, and see your cognitive growth over time.",
-  },
-];
+import Navbar from "@/components/Navbar";
+import { exercises, categoryColors, difficultyConfig } from "@/lib/exercises";
 
 export default function Home() {
   return (
     <div style={{ backgroundColor: "#1A1A1A", minHeight: "100vh" }} className="text-white">
-      {/* Nav */}
-      <nav
-        style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
-        className="flex items-center justify-between px-6 py-3 md:px-12"
-      >
-        <Link href="/">
-          <img src="/logo.png" alt="BrainReps" style={{ height: 38, width: "auto" }} />
-        </Link>
-        <div className="flex items-center gap-5 text-sm">
-          <Link href="/login" style={{ color: "#8A8A8A" }} className="hover:text-white transition-colors">
-            Login
-          </Link>
-          <Link
-            href="/signup"
-            className="px-3 py-1.5 rounded text-sm font-medium hover:opacity-90 transition-opacity"
-            style={{ backgroundColor: "#C96B8A", color: "#fff" }}
-          >
-            Sign Up
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
-        <p className="text-xs uppercase tracking-widest mb-5" style={{ color: "#C96B8A" }}>
+      <section className="flex flex-col items-center justify-center text-center px-6 py-16 md:py-20">
+        <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#C96B8A" }}>
           Cognitive Training
         </p>
-        <h1 className="text-4xl md:text-5xl font-medium tracking-tight leading-tight mb-5 max-w-xl">
-          Train your mind like you train your body
+        <h1 className="text-4xl md:text-5xl font-medium tracking-tight leading-tight mb-4 max-w-lg">
+          14 exercises. Zero fluff.
         </h1>
         <p className="text-base mb-8 max-w-md" style={{ color: "#8A8A8A" }}>
-          10 minutes a day. 14 science-backed exercises. No ads, no streaks for the sake of streaks — just deliberate cognitive training.
+          Science-backed training across memory, attention, logic, and flexibility.
+          No account required to start.
         </p>
         <div className="flex items-center gap-3 flex-wrap justify-center">
           <Link
@@ -78,73 +25,74 @@ export default function Home() {
             className="px-5 py-2.5 rounded text-sm font-medium hover:opacity-90 transition-opacity"
             style={{ backgroundColor: "#C96B8A", color: "#fff" }}
           >
-            Start Training Free
+            Start Training
           </Link>
           <Link
-            href="/problems"
-            className="px-5 py-2.5 rounded text-sm transition-colors"
+            href="/signup"
+            className="px-5 py-2.5 rounded text-sm transition-colors hover:text-white"
             style={{ border: "1px solid #3A3A3A", color: "#8A8A8A" }}
           >
-            Browse Exercises
+            Create Free Account
           </Link>
         </div>
-        <p className="text-xs mt-5" style={{ color: "#5A5A5A" }}>
-          No account required to start. Sign up to save progress.
-        </p>
       </section>
 
-      {/* Features */}
-      <section style={{ borderTop: "1px solid #2E2E2E" }} className="px-6 py-16 md:py-20">
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p className="text-xs uppercase tracking-widest text-center mb-10" style={{ color: "#5A5A5A" }}>
-            What you get
+      {/* Exercise grid */}
+      <section style={{ borderTop: "1px solid #2E2E2E" }} className="px-6 py-12 md:py-16">
+        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+          <p className="text-xs uppercase tracking-widest mb-8 text-center" style={{ color: "#5A5A5A" }}>
+            The Library
           </p>
-          <div className="grid md:grid-cols-3 gap-4">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-lg p-5"
-                style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
-              >
-                <span className="text-2xl mb-4 block" style={{ color: "#C96B8A" }}>{f.icon}</span>
-                <h3 className="text-sm font-medium mb-2">{f.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#8A8A8A" }}>{f.description}</p>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {exercises.map((ex) => {
+              const cat = categoryColors[ex.category];
+              const diff = difficultyConfig[ex.difficulty];
+              return (
+                <Link
+                  key={ex.slug}
+                  href={ex.route!}
+                  className="group rounded-lg p-5 flex flex-col gap-3 transition-colors"
+                  style={{ backgroundColor: "#262626", border: "1px solid #3A3A3A" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#C96B8A")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#3A3A3A")}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs tabular-nums" style={{ color: "#5A5A5A" }}>#{ex.num}</span>
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full font-medium"
+                      style={{ backgroundColor: diff.bg, color: diff.text }}
+                    >
+                      {ex.difficulty}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium mb-1">{ex.title}</p>
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full"
+                      style={{ backgroundColor: cat.bg, color: cat.text }}
+                    >
+                      {ex.category}
+                    </span>
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: "#5A5A5A" }}>{ex.benefit}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section style={{ borderTop: "1px solid #2E2E2E" }} className="px-6 py-16 md:py-20">
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p className="text-xs uppercase tracking-widest text-center mb-10" style={{ color: "#5A5A5A" }}>
-            How it works
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((s) => (
-              <div key={s.num}>
-                <p className="text-2xl font-medium mb-3" style={{ color: "#3A3A3A" }}>{s.num}</p>
-                <h3 className="text-sm font-medium mb-2">{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#8A8A8A" }}>{s.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
-      <section style={{ borderTop: "1px solid #2E2E2E" }} className="px-6 py-16 text-center">
-        <p className="text-xs uppercase tracking-widest mb-5" style={{ color: "#5A5A5A" }}>
-          These aren&apos;t games. They&apos;re reps.
+      {/* Footer CTA */}
+      <section style={{ borderTop: "1px solid #2E2E2E" }} className="px-6 py-12 text-center">
+        <p className="text-sm mb-4" style={{ color: "#8A8A8A" }}>
+          Sign up to save your progress, build streaks, and track improvement.
         </p>
-        <h2 className="text-2xl font-medium mb-4">Ready to start?</h2>
         <Link
-          href="/problems"
+          href="/signup"
           className="inline-block px-6 py-2.5 rounded text-sm font-medium hover:opacity-90 transition-opacity"
           style={{ backgroundColor: "#C96B8A", color: "#fff" }}
         >
-          Open the Training Library
+          Create Free Account
         </Link>
       </section>
     </div>
