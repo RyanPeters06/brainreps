@@ -31,11 +31,9 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Root: authenticated → dashboard, unauthenticated → problems
-  if (pathname === "/") {
-    return NextResponse.redirect(
-      new URL(user ? "/dashboard" : "/problems", request.url)
-    );
+  // Root: authenticated → dashboard, unauthenticated → landing page
+  if (pathname === "/" && user) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // Authenticated users don't need login/signup
