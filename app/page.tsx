@@ -15,7 +15,7 @@ export default function Home() {
           Cognitive Training
         </p>
         <h1 className="text-4xl md:text-5xl font-medium tracking-tight leading-tight mb-4 max-w-lg">
-          14 exercises. Zero fluff.
+          Train your brain. Zero fluff.
         </h1>
         <p className="text-base mb-8 max-w-md" style={{ color: "#8A8A8A" }}>
           Science-backed training across memory, attention, logic, and flexibility.

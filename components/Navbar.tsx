@@ -30,6 +30,7 @@ export default function Navbar({ logoHeight = 38 }: { logoHeight?: number }) {
   const navLinks = [
     { href: homeHref, label: "Home", exact: true },
     { href: "/problems", label: "Problems", exact: false },
+    { href: "/doomscroll-cure", label: "Doomscroll Cure", exact: false },
     { href: "/about", label: "About", exact: false },
   ];
 

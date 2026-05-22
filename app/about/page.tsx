@@ -39,7 +39,7 @@ export default function AboutPage() {
           Cognitive training built for consistency
         </h1>
         <p className="text-base max-w-xl mx-auto" style={{ color: "#8A8A8A" }}>
-          BrainReps is a daily cognitive training platform. 14 exercises. 5 cognitive domains. 10 minutes a day. No ads, no filler — just deliberate mental reps.
+          BrainReps is a daily cognitive training platform. 5 cognitive domains. 10 minutes a day. No ads, no filler — just deliberate mental reps.
         </p>
       </section>
 
@@ -96,7 +96,7 @@ export default function AboutPage() {
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { num: "01", title: "Browse the library", body: "Explore 14 exercises across memory, attention, logic, and cognitive flexibility. Filter by category or difficulty." },
+              { num: "01", title: "Browse the library", body: "Explore exercises across memory, attention, logic, and cognitive flexibility. Filter by category or difficulty." },
               { num: "02", title: "Do your daily reps", body: "One featured exercise per day keeps your streak alive. Sessions are short by design — 10 minutes is enough." },
               { num: "03", title: "Track your progress", body: "Sign up to save results, build a streak, and see category-level breakdowns of your cognitive training over time." },
             ].map((s) => (
