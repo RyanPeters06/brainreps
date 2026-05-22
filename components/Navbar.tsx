@@ -38,7 +38,7 @@ export default function Navbar({ logoHeight = 38 }: { logoHeight?: number }) {
 
   return (
     <nav
-      style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A" }}
+      style={{ backgroundColor: "#1F1F1F", borderBottom: "1px solid #3A3A3A", position: "sticky", top: 0, zIndex: 50 }}
       className="flex items-center justify-between px-6 py-4 md:px-10"
     >
       <Link href={homeHref} className="shrink-0">
